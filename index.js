@@ -17,7 +17,7 @@ const makeCommit = async (n) => {
     date: DATE
   };
 
-  console.log(DATE);
+  console.log(n);
 
   // Modify other files, e.g., index.js
   // You need to add the file paths of the files you want to commit here
