@@ -3,6 +3,7 @@ const moment = require('moment');
 const simpleGit = require('simple-git');
 const FILE_PATH = './data.json';
 const _ = require('lodash');
+const fs = require('fs'); // Import the 'fs' module to work with file paths
 
 const makeCommit = async (n) => {
   if (n === 0) {
@@ -20,10 +21,18 @@ const makeCommit = async (n) => {
   console.log(n);
 
   // Modify other files, e.g., index.js
-  // You need to add the file paths of the files you want to commit here
-  await jsonfile.writeFile(FILE_PATH, data);
-  await simpleGit().add([FILE_PATH, 'index.js']).commit(DATE, { '--date': DATE });
-  
+  // Add the file paths of all files you want to commit here
+  const filesToCommit = [FILE_PATH, 'index.js', 'other-file-1.js', 'other-file-2.js']; // Add more files as needed
+
+  // Add and commit all specified files
+  for (const filePath of filesToCommit) {
+    if (fs.existsSync(filePath)) { // Check if the file exists before adding it
+      await simpleGit().add(filePath);
+    }
+  }
+
+  await simpleGit().commit(DATE, { '--date': DATE });
+
   makeCommit(n - 1);
 };
 
