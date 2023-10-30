@@ -16,6 +16,7 @@ const makeCommit = async (n) => {
   const data = {
     date: DATE
   };
+  
   console.log(n);
 
   await jsonfile.writeFile(FILE_PATH, data);
